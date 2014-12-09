@@ -13,7 +13,7 @@ bucket.
 
     JsonGCS = require('json-gcs');
 
-    var cloudStore = new require(JsonGCS({
+    var cloudStore = JsonGCS({
       authenticator: {
         token: function() { return userOAuth2Token; },
       }
