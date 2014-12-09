@@ -39,7 +39,7 @@ define(function(require) {
 
     instance.put = function(name, doc) {
       $.ajax(
-        objectCreateUrl(name),
+        objectCreateURL(name),
         {
           method: 'POST',
           headers: { 'Authorization': authHeader() },
