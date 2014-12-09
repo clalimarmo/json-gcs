@@ -7,9 +7,9 @@
   ],
   "description": "Store JSON documents to Google Cloud Storage",
   "main": "dist/json-gcs.js",
-  "dependencies": [
+  "dependencies": {
     "jquery": "~2.0.3"
-  ],
+  },
   "moduleType": [
     "amd"
   ],
