@@ -15,11 +15,13 @@ bucket.
     $ = require('jquery');
 
     var cloudStore = JsonGCS({
+      http: {
+        ajax: $.ajax
+      },
       authenticator: {
         token: function() { return userOAuth2Token; },
       },
       bucketName: "myBucket",
-      http: $
     });
 
     cloudStore.put(objectName, jsonDocument);
