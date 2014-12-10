@@ -1,15 +1,12 @@
 {
   "name": "json-gcs",
-  "version": "0.0.0",
   "homepage": "https://github.com/clalimarmo/json-gcs",
   "authors": [
     "Carlos Lalimarmo <clalimarmo@gmail.com>"
   ],
   "description": "Store JSON documents to Google Cloud Storage",
   "main": "dist/json-gcs.js",
-  "dependencies": {
-    "jquery": "~2.1.1"
-  },
+  "dependencies": {},
   "moduleType": [
     "amd"
   ],
