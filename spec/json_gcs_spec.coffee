@@ -37,11 +37,25 @@ define (require) ->
         mocks.httpSuccessHandler = (json) ->
           requestResponse = json
 
-        instance.get('my-object-name', mocks.httpSuccessHandler)
+        instance.get('my-object-name', {
+          success: mocks.httpSuccessHandler
+        })
 
         expect(requestURL).to.eq('https://storage.googleapis.com/my-bucket/my-object-name')
         expect(requestOptions.headers['Authorization']).to.eq('Bearer 1234-oauth-token')
         expect(requestResponse).to.deep.eq(JSON.parse(mocks.response))
+
+      it 'handles errors', ->
+        errorHandled = 'error handled?'
+        mocks.httpErrorHandler = -> errorHandled = true
+        mocks.http.ajax = (url, opts) ->
+          opts.error()
+
+        instance.get('my-object-name', {
+          error: mocks.httpErrorHandler
+        })
+
+        expect(errorHandled).to.be.true
 
     context 'put', ->
 
