@@ -26,8 +26,13 @@ bucket.
 
     cloudStore.put(objectName, jsonDocument);
 
-    cloudStore.get(objectName, function(retrievedDocument) {
-      //do something with retrieved json document
+    cloudStore.get(objectName, {
+      success: function(retrievedDocument) {
+        //do something with retrieved json document
+      },
+      error: function(jqXHR, status, errorThrown) {
+        //do something about error
+      }
     });
 
 ## Notes
@@ -36,10 +41,14 @@ The module is provided as an AMD module, with simplified CommonJS wrapping.
 It's compatible with RequireJS, I haven't tried it in other contexts.
 
 So that there isn't a package dependency on jquery, we pass it into the
-initialization function. We only use the `ajax` method of jquery, so if
-you don't already use jquery, and don't want to introduce it to your project
-you can provide your own http adapter, as long as the `ajax` method matches
+initialization function. We only use the `ajax` method of jquery, so if you
+don't already use jquery, and don't want to introduce it to your project you
+can provide your own http adapter, as long as the `ajax` method matches
 jquery's signature and behavior. (This also simplifies testing).
+
+Also note: while we assume that `http.ajax` will match the jquery method's
+signature, the success and error callbacks can be passed whatever you want, as
+long as your callbacks agree with your implementation of the ajax method.
 
 ## Development
 
