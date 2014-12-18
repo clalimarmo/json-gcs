@@ -33,8 +33,8 @@ define (require) ->
             ""
           ],
           "items": [
-            {"name": "item1-name"},
-            {"name": "item2-name"}
+            {"name": "1", "metadata": {"displayName": "carlos's file"}},
+            {"name": "2", "metadata": {"displayName": "lorenzo's file"}}
           ]
         }
 
@@ -50,7 +50,7 @@ define (require) ->
 
         expect(requestURL).to.eq('https://www.googleapis.com/storage/v1/b/my-bucket/o')
         expect(requestOptions.headers['Authorization']).to.eq('Bearer 4444-token')
-        expect(requestResponse).to.deep.eq(['item1-name', 'item2-name'])
+        expect(requestResponse).to.deep.eq(mocks.response.items)
 
     context 'get', ->
 
@@ -111,7 +111,7 @@ define (require) ->
 
         instance.put('my-profile', mocks.userData)
 
-        expect(requestURL).to.eq('https://www.googleapis.com/upload/storage/v1/b/my-bucket/o?uploadType=media&name=my-profile')
+        expect(requestURL).to.eq('https://www.googleapis.com/upload/storage/v1/b/my-bucket/o?uploadType=multipart')
         expect(requestOptions.method).to.eq('POST')
         expect(requestOptions.headers['Authorization']).to.eq('Bearer 4321-oauth-token')
-        expect(requestOptions.data).to.eq(JSON.stringify(mocks.userData))
+        expect(requestOptions.data).to.include(JSON.stringify(mocks.userData))
