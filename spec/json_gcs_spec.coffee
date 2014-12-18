@@ -26,7 +26,7 @@ define (require) ->
 
         mocks.authenticator.token = -> '4444-token'
 
-        mocks.response = '{
+        mocks.response = {
           "kind": "storage#objects",
           "nextPageToken": "next page",
           "prefixes": [
@@ -36,7 +36,7 @@ define (require) ->
             {"name": "item1-name"},
             {"name": "item2-name"}
           ]
-        }'
+        }
 
         mocks.http.ajax = (url, opts) ->
           requestURL = url
