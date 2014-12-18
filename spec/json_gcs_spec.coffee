@@ -18,6 +18,40 @@ define (require) ->
         bucketName: 'my-bucket'
       )
 
+    context 'index', ->
+      it 'makes a get request and returns a list of objects in its bucket', ->
+        requestURL = 'request url'
+        requestOptions = 'request options'
+        requestResponse = 'response'
+
+        mocks.authenticator.token = -> '4444-token'
+
+        mocks.response = '{
+          "kind": "storage#objects",
+          "nextPageToken": "next page",
+          "prefixes": [
+            ""
+          ],
+          "items": [
+            {"name": "item1-name"},
+            {"name": "item2-name"}
+          ]
+        }'
+
+        mocks.http.ajax = (url, opts) ->
+          requestURL = url
+          requestOptions = opts
+          opts.success(mocks.response)
+
+        mocks.httpSuccessHandler = (json) ->
+          requestResponse = json
+
+        instance.index({success: mocks.httpSuccessHandler})
+
+        expect(requestURL).to.eq('https://www.googleapis.com/storage/v1/b/my-bucket/o')
+        expect(requestOptions.headers['Authorization']).to.eq('Bearer 4444-token')
+        expect(requestResponse).to.deep.eq(['item1-name', 'item2-name'])
+
     context 'get', ->
 
       it 'makes an ajax http get request', ->
