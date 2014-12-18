@@ -141,7 +141,7 @@ module.exports = function(grunt) {
   grunt.registerTask('build:dist', ['clean', 'copy:dev', 'bower:install', 'requirejs']);
 
   // Default task.
-  grunt.registerTask('default', ['build:full', 'karma:unit', 'jshint']);
+  grunt.registerTask('default', ['build:full', 'karma:unit', 'jshint', 'build:dist']);
   grunt.registerTask('coverage', 'Detailed test coverage information', ['build:full', 'karma:coverage']);
 
 };
