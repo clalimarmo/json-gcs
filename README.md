@@ -4,7 +4,7 @@ Store and retrieve json documents to and from Google Cloud Storage.
 
 ## Usage
 
-Require the module, and create an instance, passing in an authenticator
+Require the module, and create a Storage instance, passing in an authenticator
 object, and the name of the bucket where your documents should be stored.
 
 The authenticator object should have a `token` method that returns a
@@ -14,7 +14,7 @@ bucket.
     JsonGCS = require('json-gcs');
     $ = require('jquery');
 
-    var cloudStore = JsonGCS({
+    var datastore = JsonGCS.Storage({
       http: {
         ajax: $.ajax
       },
@@ -23,6 +23,68 @@ bucket.
       },
       bucketName: "myBucket",
     });
+
+### Using the File helper
+
+Instantiate the File helper, passing in the Storage instance you just created.
+
+    var datastoreFile = JsonGCS.File({datastore: datastore});
+
+Fetch an index of the bucket:
+
+    datastoreFile.dir({
+      success: function() {
+        //do something with index
+      },
+      error: function() {
+        //handle error
+      }
+    });
+
+Save (or overwrite) a file with data:
+
+    datastoreFile.init('new_file', {some: 'json-data'}, {
+      success: function() {
+        //do something extra
+      },
+      error: function() {
+        //handle error
+      },
+    });
+
+Read a file from the datastore, into the file:
+
+    datastoreFile.open('my_file', {
+      success: function(data) {
+        //do something extra with data
+      },
+      error: function() {
+        //handle error
+      },
+    });
+
+    datastoreFile.data() // => contents of myBucket/my_file
+
+Save to currently open file:
+
+    datastoreFile.save(updatedData, {
+      success: function() {
+        //do something extra on success
+      },
+      error: function() {
+        //handle error
+      },
+    });
+
+Get current filename:
+
+    datastoreFile.filename();
+
+Get current data:
+
+    datastoreFile.data();
+
+### Directly accessing the object storage API
 
     cloudStore.put(objectName, jsonDocument);
 
