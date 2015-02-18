@@ -1,7 +1,7 @@
 define (require) ->
   JsonGCS = require('json-gcs')
 
-  describe 'JsonGCS', ->
+  describe 'JsonGCS.Storage', ->
     mocks = {}
     instance = null
 
@@ -12,7 +12,7 @@ define (require) ->
       }
       mocks.http = {}
 
-      instance = JsonGCS(
+      instance = JsonGCS.Storage(
         http: mocks.http
         authenticator: mocks.authenticator
         bucketName: 'my-bucket'
